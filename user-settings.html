@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css">
+    <title>Place Keeper</title>
+  </head>
+  <body onload="initUserSettings()">
+    <body>
+          <div class="container">
+            <form id="user-settings" onsubmit="handleSubmit(event)">
+              <div class="row">
+                <div class="col-25">
+                    <label for="E-mail">E-mail</label>
+                </div>
+                <div class="col-75">
+                    <input type="email" id="email" name="email" class="email-input" placeholder="your email">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-25">
+                    <label for="age">Age</label>
+                </div>
+                <div class="col-75">
+                  <input type="range" id="points" name="points" min="18" max="120"><output id="value"></output>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-25">
+                    <label for="BackgroundColor">Background Color</label>
+                </div>
+                <div class="col-75">
+                    <input type="color" id="BackgroundColor" name="BackgroundColor">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-25">
+                    <label for="textColor">Text Color</label>
+                </div>
+                <div class="col-75">
+                    <input type="color" id="textColor" name="textColor">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-25">
+                    <label for="birthdaytime">Birthday (date and time):</label>
+                </div>
+                <div class="col-75">
+                    <input type="datetime-local" id="birthdaytime" name="birthdaytime">
+                </div>
+              </div>
+              
+              <div class="row">
+                <input type="submit" value="Set">
+              </div>
+            </form>
+          </div>
+
+          <script type="module" src="./js/userSettingsController.js"></script>
+
+        </body>
+
+  </body>
+</html>

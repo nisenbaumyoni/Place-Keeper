@@ -1,0 +1,21 @@
+header, footer, main, aside, nav, div {
+  padding: 2%;
+  border: solid 2px #000000;
+  margin: 10px;
+  font: bold 20px "Courier New", Courier, monospace;
+  white-space: inherit;
+}
+#banner {height:100px;background:#ff8c00 }
+#navigation {float:left;
+  width:15%;
+  height:400px;
+  background:#7fff00}
+#main {float:left;
+  width:50%;
+  height:400px;
+  background:#f0e68c}
+#complementary {float:left;width:94.5%;height:400px;background:#4682b4}
+#contentinfo {clear:both;height:17.5 px;background:#ffb6c1}
+#search {background:#ffff00;font-size:small;}
+#form {background:#fafad2;font-size:small;}
+#application {background:#f5f5f5;font-size:medium;width:300px;height:200px}
