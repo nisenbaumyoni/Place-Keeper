@@ -13,8 +13,8 @@ let gUser = {
    
 function setUser(userPrefs){
     gUser = userPrefs;
-    localStorageService.post()
-    console.log("gUser is",gUser);
+    utilService.saveToStorage(1,userPrefs);
+    console.log("userPrefs saved in Storage is",gUser);
    }
 
 

@@ -1,23 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="styles.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Place Keeper</title>
-  </head>
-  <body onload="initPlaceKeeper()">
-    <body>
-        <header id="banner">&lt;Find your way back to your best places></header>
-        <nav>
-            <a href="places.html">&lt;Map </a> |
+    <!-- Your CSS styles or external CSS links can go here -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="initPlaceKeeper()">
+    <header id="banner">
+        <h1>Find your way back to your best places</h1>
+                <nav>
+            <a href="places.html">Map </a> |
             <a href="user-settings.html">Preferences</a> |
-          </nav>        
-        <main id="main">&lt;main>
-          
-        </main><aside id="complementary"> &lt;</aside>
-        <footer id="contentinfo">&lt;footer></footer>
+          </nav>
+    </header>
+    
+    <aside id="complementary">
+        <h2>Aside Section</h2>
+        <p>This is some content in the aside section.</p>
+    </aside>
 
-        <script type="module" src="js/maincontroller.js"></script>
+    <main class="main" id="main">
+        <h2>Main Content</h2>
+        <p>This is the main content of the page.</p>
+    </main>
 
-  </body>
+    <footer class="complementary" id="complementary">
+        &copy; 2023 My Website. All rights reserved.
+    </footer>
+
+    <script type="module" src="js/maincontroller.js"></script>
+
+</body>
 </html>
