@@ -1,12 +1,13 @@
 import {storageService} from './localStorageService.js'
 import { utilService } from "./utilService.js";
 
-// const gPlaces = [
-// {id: '1', lat: 32.1416, lng: 34.831213, name: 'Pukis 1', zoom: 8},
-// {id: '2', lat: 32.1416, lng: 36.831213, name: 'Pukis 2', zoom: 8},
-// {id: '3', lat: 32.1416, lng: 38.831213, name: 'Pukis 3', zoom: 8},
-// {id: '4', lat: 32.1416, lng: 32.831213, name: 'Pukis 4', zoom: 8},
-// ];
+export const placeService = {
+    getPlaces,
+    removePlace,
+    getPlaceById,
+    getPlaceById,
+    addPlace,
+}
 
 const STORAGE_KEY = 'placesDB'
 
@@ -16,16 +17,22 @@ function getPlaces() {
     return storageService.query(STORAGE_KEY)
 }
 
-function removePlace(placeId) {
+async function removePlace(placeId) {
     console.log("placeService.removePlace, ",placeId);
-    let places = utilService.loadFromStorage(STORAGE_KEY)
-    const index = places.findIndex(object => {
-        return object.id === placeId;
-    });
+    // let places = utilService.loadFromStorage(STORAGE_KEY)
+    // const index = places.findIndex(object => {
+    //     return object.id === placeId;
+    // });
 
-    console.log("index, ",index);
-    places.splice(index, 1);
-    utilService.saveToStorage(STORAGE_KEY,places)
+    // console.log("index, ",index);
+    // places.splice(index, 1);
+    // utilService.saveToStorage(STORAGE_KEY,places)
+
+    //storageService.remove(STORAGE_KEY,placeId);
+
+    const place = await storageService.remove(STORAGE_KEY, placeId)
+    return place
+
 } 
 
 function addPlace(nameInput, latInput, lngInput) {
@@ -37,9 +44,10 @@ function addPlace(nameInput, latInput, lngInput) {
     utilService.saveToStorage(STORAGE_KEY,places)
 } 
 
-function getPlaceById(placeId) {
-
-} 
+async function getPlaceById(placeId) {
+    const place = await storageService.get(STORAGE_KEY, placeId)
+    return place
+}
 
 function _createPlace(nameInput, latInput, lngInput) {
     return {
@@ -50,8 +58,6 @@ function _createPlace(nameInput, latInput, lngInput) {
     }
 
 } 
-
-
 
 function _createPlaces() {
     let places = utilService.loadFromStorage(STORAGE_KEY)
@@ -66,17 +72,4 @@ function _createPlaces() {
        
     }
     utilService.saveToStorage(STORAGE_KEY, places)
-}
-
-function onZoomPlace(placeId) {
-    console.log("onZoomPlace, ",placeId);
-
-}
-
-export const placeService = {
-    getPlaces,
-    removePlace,
-    getPlaceById,
-    onZoomPlace,
-    addPlace
 }

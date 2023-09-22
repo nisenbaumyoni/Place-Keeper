@@ -4,17 +4,11 @@ import {placeService} from './services/placeService.js';
 window.initMap=initMap;
 window.initPlaces=initPlaces;
 window.onRemovePlace=onRemovePlace;
-window.onZoomPlace=placeService.onZoomPlace;
-window.addPlace=placeService.addPlace;
+window.onZoomPlace=onZoomPlace;
 window.onAddPlace=onAddPlace;
 
-// function mapReady() {
-//     console.log('Map is ready')
-// }
-
 function initMap(lat=29.55724, lng=34.95294) {
-    //            if (!lat) lat = 32.0749831
-    //            if (!lng) lat = 34.9120554
+
     console.log("initMap Hi!")
     var elMap = document.querySelector('.map')
     var options = {
@@ -30,7 +24,7 @@ function initMap(lat=29.55724, lng=34.95294) {
     var marker = new google.maps.Marker({
         position: { lat, lng },
         map,
-        title: 'Hello World!'
+        title: 'Eilat'
     })
 
     console.log("marker is", marker)
@@ -43,7 +37,6 @@ function initPlaces() {
 
 async function renderPlaces() {
     let places = await placeService.getPlaces();
-    // utilService.saveToStorage(2,places);
     console.log("places",places);
     let strHtmls= `
         <form id="add-place" onsubmit="onAddPlace(event)">
@@ -60,7 +53,7 @@ async function renderPlaces() {
                 <label for="lat">Latitude</label>
             </div>
             <div class="col-75">
-                <input type="number" id="lat" name="lat" min="0" step="0.01" class="lat-input">
+                <input type="number" id="lat" name="lat" min="0" step="0.0000001" class="lat-input">
             </div>
             </div>
             <div class="row">
@@ -101,9 +94,42 @@ function onAddPlace(ev){
     renderPlaces();
 }
 
-function onRemovePlace(placeId){
+async function onRemovePlace(placeId){
     console.log("onRemovePlace!, ",placeId);
     //ev.preventDefault();
-    placeService.removePlace(placeId);
+    //placeService.removePlace(placeId);
+    const result = await placeService.removePlace(placeId);
     renderPlaces();
+}
+
+async function onZoomPlace(placeId){
+    console.log("on Zoom Place!, ",placeId);
+    
+    try {
+        const place = await placeService.getPlaceById(placeId)
+        const lat = place.lat;
+        const lng = place.lng;
+        const name = place.name;
+
+        var elMap = document.querySelector('.map')
+        var options = {
+            center: { lat, lng },
+            zoom: 8
+        }
+    
+        var map = new google.maps.Map(
+            elMap,
+            options
+        )
+    
+        var marker = new google.maps.Marker({
+            position: { lat, lng },
+            map,
+            title: name
+        })
+    } catch (err) {
+        console.log('Error', err)
+        flashMsg('Cannot zoom place')
+    }
+    
 }
