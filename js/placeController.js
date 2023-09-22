@@ -3,7 +3,7 @@ import {placeService} from './services/placeService.js';
 
 window.initMap=initMap;
 window.initPlaces=initPlaces;
-window.removePlace=placeService.removePlace;
+window.onRemovePlace=onRemovePlace;
 window.onZoomPlace=placeService.onZoomPlace;
 window.addPlace=placeService.addPlace;
 window.onAddPlace=onAddPlace;
@@ -82,7 +82,7 @@ async function renderPlaces() {
     strHtmls += places.map(place => `
         <article class="place-preview">
             ${place.name}
-            <button title="Delete place" class="btn-remove" onclick="removePlace('${place.id}')">X</button>
+            <button title="Delete place" class="btn-remove" onclick="onRemovePlace('${place.id}')">X</button>
             <button title="Zoom Place" class="btn-zoom-place" onclick="onZoomPlace('${place.id}')">Zoom</button>
         </article>
         `
@@ -101,3 +101,9 @@ function onAddPlace(ev){
     renderPlaces();
 }
 
+function onRemovePlace(placeId){
+    console.log("onRemovePlace!, ",placeId);
+    //ev.preventDefault();
+    placeService.removePlace(placeId);
+    renderPlaces();
+}

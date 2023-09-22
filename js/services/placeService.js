@@ -1,5 +1,6 @@
 import {storageService} from './localStorageService.js'
 import { utilService } from "./utilService.js";
+
 // const gPlaces = [
 // {id: '1', lat: 32.1416, lng: 34.831213, name: 'Pukis 1', zoom: 8},
 // {id: '2', lat: 32.1416, lng: 36.831213, name: 'Pukis 2', zoom: 8},
@@ -16,7 +17,15 @@ function getPlaces() {
 }
 
 function removePlace(placeId) {
-    console.log("removePlace, ",placeId);
+    console.log("placeService.removePlace, ",placeId);
+    let places = utilService.loadFromStorage(STORAGE_KEY)
+    const index = places.findIndex(object => {
+        return object.id === placeId;
+    });
+
+    console.log("index, ",index);
+    places.splice(index, 1);
+    utilService.saveToStorage(STORAGE_KEY,places)
 } 
 
 function addPlace(nameInput, latInput, lngInput) {
