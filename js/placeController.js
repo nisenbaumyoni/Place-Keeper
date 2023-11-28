@@ -1,44 +1,47 @@
-import {placeService} from './services/placeService.js';
-//import {utilService} from './services/utilService.js';
+import { placeService } from "./services/placeService.js"
 
-window.initMap=initMap;
-window.initPlaces=initPlaces;
-window.onRemovePlace=onRemovePlace;
-window.onZoomPlace=onZoomPlace;
-window.onAddPlace=onAddPlace;
+window.initMap = initMap
+window.initPlaces = initPlaces
+window.onRemovePlace = onRemovePlace
+window.onZoomPlace = onZoomPlace
+window.onAddPlace = onAddPlace
 
-function initMap(lat=29.55724, lng=34.95294) {
+function initMap(name = 'Eilat', lat = 29.55724, lng = 34.95294) {
+  const location = {lat : lat , lng : lng}
+  var elMap = document.querySelector(".map")
+  var options = {
+    zoom: 8,
+    center: location
+}
 
-    console.log("initMap Hi!")
-    var elMap = document.querySelector('.map')
-    var options = {
-        center: { lat, lng },
-        zoom: 8
-    }
+  var map = new google.maps.Map(elMap, options)
 
-    var map = new google.maps.Map(
-        elMap,
-        options
-    )
+  var marker = new google.maps.Marker({
+    position: location,
+    map,
+    title: name
+  })
 
-    var marker = new google.maps.Marker({
-        position: { lat, lng },
-        map,
-        title: 'Eilat'
-    })
+  map.addListener("click", (event) => {
+    var latitude = event.latLng.lat()
+    var longitude = event.latLng.lng()
+    var name = prompt("enter location name")
+    if(name !=="" && name!==null){
+        placeService.addPlace(name, latitude, longitude);
+        renderPlaces()
+        initMap(name,latitude,longitude)} 
+  })
 
-    console.log("marker is", marker)
-//
 }
 
 function initPlaces() {
-    renderPlaces();
+  renderPlaces()
 }
 
 async function renderPlaces() {
-    let places = await placeService.getPlaces();
-    console.log("places",places);
-    let strHtmls= `
+  let places = await placeService.getPlaces()
+  console.log("places", places)
+  let strHtmls = `
         <form id="add-place" onsubmit="onAddPlace(event)">
             <div class="row">
             <div class="col-25">
@@ -72,7 +75,9 @@ async function renderPlaces() {
             <br><br>
         </form>
     `;
-    strHtmls += places.map(place => `
+  strHtmls += places
+    .map(
+      (place) => `
         <article class="place-preview">
             ${place.name}
             <button title="Delete place" class="btn-remove" onclick="onRemovePlace('${place.id}')">X</button>
@@ -80,56 +85,38 @@ async function renderPlaces() {
         </article>
         `
     )
-   
-    let placesDiv = document.querySelector('.places');
-    placesDiv.innerHTML = strHtmls;
+    .join("");
 
+  let placesDiv = document.querySelector(".places");
+  placesDiv.innerHTML = strHtmls;
 }
 
-function onAddPlace(ev){
-    ev.preventDefault();
-    const addedPlace = Object.fromEntries(new FormData(ev.target));
-    console.log("addedPlace, ",addedPlace);
-    placeService.addPlace(addedPlace.placeName,addedPlace.lat,addedPlace.lng);
+function onAddPlace(ev) {
+  ev.preventDefault();
+  const addedPlace = Object.fromEntries(new FormData(ev.target));
+  console.log("addedPlace, ", addedPlace);
+  placeService.addPlace(addedPlace.placeName, addedPlace.lat, addedPlace.lng);
+  renderPlaces();
+}
+
+function onAddPlaceOnMap(name,lat,lng) {
+    placeService.addPlace(name, lat, lng);
     renderPlaces();
+  }
+
+async function onRemovePlace(placeId) {
+  console.log("onRemovePlace!, ", placeId);
+  const result = await placeService.removePlace(placeId);
+  renderPlaces();
 }
 
-async function onRemovePlace(placeId){
-    console.log("onRemovePlace!, ",placeId);
-    //ev.preventDefault();
-    //placeService.removePlace(placeId);
-    const result = await placeService.removePlace(placeId);
-    renderPlaces();
-}
+async function onZoomPlace(placeId) {
+  try {
+    const place = await placeService.getPlaceById(placeId);
+    initMap(place.name,place.lat,place.lng)
 
-async function onZoomPlace(placeId){
-    console.log("on Zoom Place!, ",placeId);
-    
-    try {
-        const place = await placeService.getPlaceById(placeId)
-        const lat = place.lat;
-        const lng = place.lng;
-        const name = place.name;
-
-        var elMap = document.querySelector('.map')
-        var options = {
-            center: { lat, lng },
-            zoom: 8
-        }
-    
-        var map = new google.maps.Map(
-            elMap,
-            options
-        )
-    
-        var marker = new google.maps.Marker({
-            position: { lat, lng },
-            map,
-            title: name
-        })
-    } catch (err) {
-        console.log('Error', err)
-        flashMsg('Cannot zoom place')
-    }
-    
+  } catch (err) {
+    console.log("Error", err);
+    flashMsg("Cannot zoom place");
+  }
 }

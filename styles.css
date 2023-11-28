@@ -29,3 +29,19 @@ footer {
 a {
   color: #0408fc;
 }
+
+.row{
+  background-color: rgba(255, 136, 0, 0.582);
+  border-width: 1px;
+  border-color: black;
+  border-style: double;
+  margin: 10px;
+}
+
+.col-25{
+  display: flexbox;
+}
+
+.col-75{
+  display: flex;
+}

@@ -1,6 +1,6 @@
-// import {localStorageService} from './localStorageService.js';
 import {utilService} from './utilService.js';
 
+const STORAGE_KEY = 'userDB'
 
 let gUser = {
     email : '',
@@ -13,12 +13,9 @@ let gUser = {
    
 function setUser(userPrefs){
     gUser = userPrefs;
-    utilService.saveToStorage(1,userPrefs);
+    utilService.saveToStorage(STORAGE_KEY,userPrefs);
     console.log("userPrefs saved in Storage is",gUser);
    }
-
-
-
 
 export const userService = {
     setUser

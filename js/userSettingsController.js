@@ -1,4 +1,7 @@
-//343434234
+// TODO
+// 2. add custom control on the map
+// 3. when saving user prefs , change for all pages
+// 4. change "1" to userDb
 import {userService} from './services/userService.js'
 import {utilService} from './services/utilService.js';
 
