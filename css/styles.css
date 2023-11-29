@@ -1,0 +1,12 @@
+.map-aside{
+    border-color: black;
+    width: 30%;
+    float: left;
+}
+
+.main{
+    width : 70%;
+    float: left;
+    border-color: black;
+
+}

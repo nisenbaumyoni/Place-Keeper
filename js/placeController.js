@@ -66,7 +66,7 @@ async function _renderPlaces() {
     )
     .join("");
 
-  let placesDiv = document.querySelector(".places");
+  let placesDiv = document.querySelector(".places-list");
   placesDiv.innerHTML = strHtmls;
 }
 

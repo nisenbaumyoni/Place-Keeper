@@ -10,7 +10,7 @@ window.handleSubmit = handleSubmit
 
 function initUserSettings(){
     console.log("initUserSettings");
-    let userPrefs = utilService.loadFromStorage(1);
+    let userPrefs = utilService.loadFromStorage("userDB");
     console.log("userPrefs.BackgroundColor ",userPrefs.BackgroundColor);
     const element = document.querySelector('.backgroundColorInputClass');
     console.log("element is",element);
